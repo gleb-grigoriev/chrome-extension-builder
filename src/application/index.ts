@@ -1,17 +1,18 @@
 import * as path from 'node:path';
 import { readFileSync, writeFileSync, unlinkSync, openSync, writeSync, close } from 'node:fs';
-import { BuilderContext, createBuilder } from '@angular-devkit/architect';
+import { BuilderContext, BuilderOutput, createBuilder } from '@angular-devkit/architect';
 import { ApplicationBuilderOptions, buildApplication } from '@angular-devkit/build-angular';
-import { getSystemPath, json, normalize } from '@angular-devkit/core';
+//import { getSystemPath, json } from '@angular-devkit/core';
 import type { ApplicationBuilderExtensions, ApplicationBuilderInternalOptions } from '@angular/build/src/builders/application/options';
 import { defer, switchMap, tap } from 'rxjs';
 import { parse } from 'node-html-parser';
-
+import { Observable } from 'rxjs';
 import { CustomEsbuildApplicationSchema, ScriptAndHtmlFiles } from '../custom-esbuild-schema';
 import { cloneDeep, omit } from 'lodash';
 //import { MyPlugin } from './build-app-custom';
 import type { Plugin, PluginBuild } from 'esbuild';
 import { OutputPathClass } from '@angular/build/src/builders/application/schema';
+import { getSystemPath, JsonObject, normalize } from '@angular-devkit/core';
 
 interface ManifestInfo {
   service_worker: string | null;
@@ -51,10 +52,11 @@ function createCommonBuildOptions(options: ApplicationBuilderOptions){
   };*/
   return res;
 }
+
 export function buildCustomEsbuildApplication(
   options: CustomEsbuildApplicationSchema,
   context: BuilderContext
-) {
+): Observable<BuilderOutput> {
 
   const workspaceRoot = getSystemPath(normalize(context.workspaceRoot));
   const manifestInfo = {
@@ -236,6 +238,7 @@ export function buildCustomEsbuildApplication(
   );
 }
 
-export default createBuilder<json.JsonObject & CustomEsbuildApplicationSchema>(
-  buildCustomEsbuildApplication
-);
+export default createBuilder<JsonObject & CustomEsbuildApplicationSchema>(buildCustomEsbuildApplication);
+//export default createBuilder<CustomEsbuildApplicationSchema>(buildCustomEsbuildApplication);
+
+
