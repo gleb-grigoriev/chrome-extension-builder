@@ -1,0 +1,26 @@
+{
+  "name": "@angular-dev/chrome-extension-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc && ts-node build_scripts/setup-package.ts && ts-node build_scripts/merge-schemes.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "cd dist && npm pack"
+  },
+  "author": "Gleb Grigorev",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/lodash": "^4.17.16",
+    "lodash": "^4.17.21",
+    "typescript": "^5.8.3"
+  },
+  "builders": "builders.json",
+  "dependencies": {
+    "@angular-builders/common": "^3.0.1",
+    "@angular-devkit/architect": "^0.1902.9",
+    "@angular-devkit/build-angular": "^19.2.9",
+    "node-html-parser": "^7.0.1"
+  }
+}

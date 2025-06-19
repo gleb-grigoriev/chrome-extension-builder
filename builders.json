@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/@angular-devkit/architect/src/builders-schema.json",
+  "builders": {
+    "application": {
+      "implementation": "./application",
+      "schema": "./application/schema.json",
+      "description": "Build browser app extended with custom esbuild config"
+    }
+  }
+}
